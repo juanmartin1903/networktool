@@ -1,18 +1,32 @@
+//Bibliotek
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 
+//Konstanter
+
 #define MAX_LOG_ENTRIES 100
 #define MAX_ENTRY_LEN 100
 
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define RESET   "\033[0m"
+
+//Menyfunktion
+
 void mostrar_menu() {
-    printf("\n===NÄTVERKSVERKTYG===\n");
-    printf("1. Validera IP-adress\n");
-    printf("2. Validera port\n");
-    printf("3. Visa logg\n");
-    printf("4. Avsluta\n");
+    printf(BLUE"\n===NÄTVERKSVERKTYG===\n" RESET);
+    printf(BLUE"1. Validera IP-adress\n" RESET);
+    printf(BLUE"2. Validera port\n" RESET);
+    printf(BLUE"3. Visa logg\n" RESET);
+    printf(BLUE"4. Avsluta\n" RESET);
 }
+
+//Valideringsfunktioner
 
 bool validar_ip(const char *ip) {
     int a, b, c, d;
@@ -49,12 +63,16 @@ bool validar_port(const char *port_str) {
     return port >= 1 && port <= 65535;
 }
 
+//Loggfunktion
+
 void mostrar_log(char log[][MAX_ENTRY_LEN], int log_count) {
-    printf("\nLOGG\n");
+    printf(GREEN"\nLOGG\n" RESET);
     for (int i = 0; i < log_count; i++) {
-        printf("%d. %s\n", i + 1, log[i]);
+        printf(GREEN"%d. %s\n" RESET, i + 1, log[i]);
     }
 }
+
+//Huvudfunktion
 
 int main() {
     char log[MAX_LOG_ENTRIES][MAX_ENTRY_LEN];
@@ -65,7 +83,7 @@ int main() {
 
     while (1) {
         mostrar_menu();
-        printf("Välj ett alternativ: ");
+        printf(YELLOW"Välj ett alternativ: " RESET);
 
         if (!fgets(buffer, sizeof(buffer), stdin)) {
             continue;
@@ -75,29 +93,29 @@ int main() {
 
         if (choice == 1) {
             char ip[256];
-            printf("Ange IP-adress: ");
+            printf(YELLOW"Ange IP-adress: " RESET);
             if (!fgets(ip, sizeof(ip), stdin)) continue;
             ip[strcspn(ip, "\n")] = '\0';
 
             if (validar_ip(ip)) {
-                printf("%s är en giltig IP-adress.\n", ip);
+                printf(GREEN"%s är en giltig IP-adress.\n", ip);
                 snprintf(log[log_count++], MAX_ENTRY_LEN, "IP %s - giltig", ip);
             } else {
-                printf("%s är inte en giltig IP-adress.\n", ip);
+                printf(RED"%s är inte en giltig IP-adress.\n", ip);
                 snprintf(log[log_count++], MAX_ENTRY_LEN, "IP %s - ogiltig", ip);
             }
 
         } else if (choice == 2) {
             char port_str[256];
-            printf("Ange port: ");
+            printf(YELLOW"Ange port: " RESET);
             if (!fgets(port_str, sizeof(port_str), stdin)) continue;
             port_str[strcspn(port_str, "\n")] = '\0';
 
             if (validar_port(port_str)) {
-                printf("%s är en giltig port.\n", port_str);
+                printf(GREEN"%s är en giltig port.\n", port_str);
                 snprintf(log[log_count++], MAX_ENTRY_LEN, "Port %s - giltig", port_str);
             } else {
-                printf("%s är inte en giltig port.\n", port_str);
+                printf(RED"%s är inte en giltig port.\n", port_str);
                 snprintf(log[log_count++], MAX_ENTRY_LEN, "Port %s - ogiltig", port_str);
             }
 
@@ -105,8 +123,8 @@ int main() {
             mostrar_log(log, log_count);
 
         } else if (choice == 4) {
-            printf("Totalt antal valideringar: %d\n", log_count);
-            printf("Avslutar.\n");
+            printf(YELLOW"Totalt antal valideringar: %d\n" RESET, log_count);
+            printf(YELLOW"Avslutar.\n" RESET);
             break;
 
         } else {
