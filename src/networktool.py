@@ -1,10 +1,18 @@
+## Färgkoder för terminalen
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+BLUE = "\033[34m"
+RESET = "\033[0m"
+
+
 ## Nätverksverktyg - Meny
 def show_menu():
-    print("\n===NÄTVERKSVERKTYG===")
-    print("1. Validera IP-adress")
-    print("2. Validera port")
-    print("3. Visa logg")
-    print("4. Avsluta")
+    print(f"\n==={BLUE}NÄTVERKSVERKTYG{RESET}===")
+    print(f"{BLUE}1. Validera IP-adress{RESET}")
+    print(f"{BLUE}2. Validera port{RESET}")
+    print(f"{BLUE}3. Visa logg{RESET}")
+    print(f"{BLUE}4. Avsluta{RESET}")
 
 ## Valideringsfunktioner för IP-adress
 
@@ -32,9 +40,9 @@ def validate_port(port_str: str) -> bool:
 ## Loggfunktion
 
 def show_log(log):
-    print("\nLOGG")
+    print(f"\n{GREEN}LOGG{RESET}")
     for i, entry in enumerate(log, start=1):
-        print(f"{i}. {entry}")
+        print(f"{GREEN}{i}. {entry}{RESET}")
 
 ## Huvudfunktion
 
@@ -43,38 +51,38 @@ def main():
 
     while True:
         show_menu()
-        choice = input("Välj ett alternativ: ").strip()
+        choice = input(f"{YELLOW}Välj ett alternativ: {RESET}").strip()
 
         if choice == "1":
-            ip = input("Ange IP-adress: ").strip()
+            ip = input(f"{YELLOW}Ange IP-adress: {RESET}").strip()
             if validate_ip(ip):
-                print(f"{ip} är en giltig IP-adress.")
+                print(f"{GREEN}{ip} är en giltig IP-adress.{RESET}")
                 log.append(f"IP {ip} - giltig")
             else:
-                print(f"{ip} är inte en giltig IP-adress.")
+                print(f"{RED}{ip} är inte en giltig IP-adress.{RESET}")
                 log.append(f"IP {ip} - ogiltig")
 
         elif choice == "2":
-            port_str = input("Ange port: ").strip()
+            port_str = input(f"{YELLOW}Ange port: {RESET}").strip()
             if validate_port(port_str):
-                print(f"{port_str} är en giltig port.")
+                print(f"{GREEN}{port_str} är en giltig port.{RESET}")
                 log.append(f"Port {port_str} - giltig")
             else:
-                print(f"{port_str} är inte en giltig port.")
+                print(f"{RED}{port_str} är inte en giltig port.{RESET}")
                 log.append(f"Port {port_str} - ogiltig")
 
         elif choice == "3":
             show_log(log)
 
         elif choice == "4":
-            print(f"Totalt antal valideringar: {len(log)}")
-            print("Avslutar.")
+            print(f"{GREEN}Totalt antal valideringar: {len(log)}{RESET}")
+            print(f"{GREEN}Avslutar.{RESET}")
             break
 
         else:
-            print("Ogiltigt val.")
+            print(f"{RED}Ogiltigt val.{RESET}")
 
 ## Kör programmet
 
 if __name__ == "__main__":
-    main()
+        main()
