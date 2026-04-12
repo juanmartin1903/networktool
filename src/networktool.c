@@ -8,7 +8,7 @@
 //Konstanter
 
 #define MAX_LOG_ENTRIES 100
-#define MAX_ENTRY_LEN 100
+#define MAX_ENTRY_LEN 300
 
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
@@ -128,7 +128,7 @@ int main() {
             break;
 
         } else {
-            printf("Ogiltigt val.\n");
+            printf(RED"Ogiltigt val.\n" RESET);
         }
     }
 
